@@ -39,6 +39,7 @@ body {
   color: white;
   border-radius: 10px;
   transition: background 0.3s;
+  outline: none;
 
   padding: 10px;
 }
@@ -46,4 +47,8 @@ body {
 .col button:hover {
   cursor: pointer;
   background: rgba(0, 0, 0, 0.1);
+}
+
+.col i {
+  pointer-events: none;
 }

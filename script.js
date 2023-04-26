@@ -1,7 +1,19 @@
 const columns = document.querySelectorAll(".col");
 
 document.addEventListener("keydown", (e) => {
+  e.preventDefault();
   if (e.code.toLowerCase() === "space") setRandomColors();
+});
+
+document.addEventListener("click", (e) => {
+  const target = e.target;
+
+  if (target.dataset.type === "lock") {
+    const icon = target.querySelector("i");
+    console.log(icon);
+    icon.classList.toggle("fa-lock");
+    icon.classList.toggle("fa-lock-open");
+  }
 });
 
 function generateRandomColor() {
