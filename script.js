@@ -14,7 +14,8 @@ function generateRandomColor() {
 function setRandomColors() {
   columns.forEach((col) => {
     const text = col.querySelector("h2");
-    const color = generateRandomColor();
+    const button = col.querySelector("button");
+    const color = chroma.random(); // либо свою функцию generateRandomColor();
 
     text.textContent = color;
     col.style.backgroundColor = color;
