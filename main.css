@@ -17,8 +17,6 @@ body {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-
-  border: 1px solid black;
 }
 
 .col h2 {
