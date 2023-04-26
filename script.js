@@ -14,6 +14,10 @@ document.addEventListener("click", (e) => {
     icon.classList.toggle("fa-lock");
     icon.classList.toggle("fa-lock-open");
   }
+
+  if (target.dataset.type === "copy") {
+    copyToBuffer(target.textContent);
+  }
 });
 
 function generateRandomColor() {
@@ -49,6 +53,10 @@ function setRandomColors() {
 function setTextColors(el, color) {
   const luminance = chroma(color).luminance();
   el.style.color = luminance > 0.5 ? "black" : "white";
+}
+
+function copyToBuffer(text) {
+  return navigator.clipboard.writeText(text);
 }
 
 setRandomColors();
