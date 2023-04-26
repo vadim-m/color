@@ -2,7 +2,10 @@ const columns = document.querySelectorAll(".col");
 
 document.addEventListener("keydown", (e) => {
   e.preventDefault();
-  if (e.code.toLowerCase() === "space") setRandomColors();
+  if (e.code.toLowerCase() === "space") {
+    setRandomColors();
+    console.log("ff");
+  }
 });
 
 document.addEventListener("click", (e) => {
@@ -10,7 +13,6 @@ document.addEventListener("click", (e) => {
 
   if (target.dataset.type === "lock") {
     const icon = target.querySelector("i");
-    console.log(icon);
     icon.classList.toggle("fa-lock");
     icon.classList.toggle("fa-lock-open");
   }
@@ -31,22 +33,36 @@ function generateRandomColor() {
   return `#${color}`;
 }
 
-function setRandomColors() {
-  columns.forEach((col) => {
+function setRandomColors(isInitial) {
+  const colors = isInitial ? getColorsFromHash() : [];
+
+  columns.forEach((col, index) => {
     const isLocked = col.querySelector("i").classList.contains("fa-lock");
+    const text = col.querySelector("h2");
+    const button = col.querySelector("button");
+
     if (isLocked) {
+      colors.push(text.textContent);
       return;
     }
 
-    const text = col.querySelector("h2");
-    const button = col.querySelector("button");
-    const color = chroma.random(); // либо свою функцию generateRandomColor();
+    const color = isInitial
+      ? colors[index]
+        ? colors[index]
+        : chroma.random()
+      : chroma.random(); // либо свою функцию generateRandomColor();
+
+    if (!isInitial) {
+      colors.push(color);
+    }
 
     text.textContent = color;
     col.style.backgroundColor = color;
 
     setTextColors(text, color);
     setTextColors(button, color);
+
+    updateColorsHash(colors);
   });
 }
 
@@ -59,4 +75,23 @@ function copyToBuffer(text) {
   return navigator.clipboard.writeText(text);
 }
 
-setRandomColors();
+function updateColorsHash(colors = []) {
+  document.location.hash = colors
+    .map((color) => color.toString().slice(1))
+    .join("-");
+}
+
+function getColorsFromHash() {
+  const hash = document.location.hash;
+
+  if (hash.length > 1) {
+    return hash
+      .slice(1)
+      .split("-")
+      .map((color) => `#${color}`);
+  }
+
+  return [];
+}
+
+setRandomColors(true);
