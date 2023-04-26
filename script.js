@@ -4,7 +4,6 @@ document.addEventListener("keydown", (e) => {
   e.preventDefault();
   if (e.code.toLowerCase() === "space") {
     setRandomColors();
-    console.log("ff");
   }
 });
 
